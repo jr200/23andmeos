@@ -15,10 +15,10 @@ until $(curl --output /dev/null \
              --fail \
              localhost:8888/v1/chain/get_info)
 do
-  echo "Waiting for eosio blockchain to be started..."
+  echo "Waiting eosio blockchain to be started..."
   sleep 2s
 done
 
-# start mongodb and put in background
-echo "[quick_start.sh] Starting mongodb"
-./start_mongodb_docker.sh --nolog
+#start frontend react app
+echo "[quick_start.sh] Starting frontend react app"
+./start_frontend.sh
