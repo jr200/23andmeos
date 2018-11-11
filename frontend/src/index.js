@@ -9,6 +9,7 @@ import JobMarket from "./components/views/jobmarket"
 import BidsForJob from "./components/views/bidsforjob"
 import ProjectLog from "./components/views/projectlog"
 import Arbitration from "./components/views/arbitration"
+import RateCollabParticipant from "./components/views/ratecollabparticipant"
 import PublishProject from "./components/views/publishproject"
 import Index from "./components/landing"
 
@@ -16,9 +17,6 @@ ReactDOM.render(
   <Router>
     <div>
       <Nav pills>
-        <NavItem>
-          <NavLink href="/">NoteChain</NavLink>
-        </NavItem>
         <NavItem>
           <NavLink href="/jobmarket" active>
             Market Place
@@ -34,14 +32,21 @@ ReactDOM.render(
           <NavLink href="/projectlog">xxProjectLog</NavLink>
         </NavItem>
         <NavItem>
+          <NavLink href="/ratecollabparticipant">RateCollabJob</NavLink>
+        </NavItem>
+        <NavItem>
           <NavLink href="/arbitration">Arbitration</NavLink>
         </NavItem>
       </Nav>
 
       <div>
-        <Route exact path="/" component={Index} />
         <Route path="/publishproject" component={PublishProject} />
         <Route path="/jobmarket" component={JobMarket} />
+        <Route exact path="/" component={JobMarket} />
+        <Route
+          path="/ratecollabparticipant/:jobid/:participant"
+          component={RateCollabParticipant}
+        />
         <Route path={`/bidsforjob/:jobid`} component={BidsForJob} />
         <Route path="/projectlog" component={ProjectLog} />
         <Route path="/arbitration" component={Arbitration} />

@@ -62,10 +62,7 @@ export default class BidsForJob extends Component {
   }
 
   componentDidMount() {
-    const { params } = this.props.match
-    const { jobid } = params
-
-    this.getTable(jobid)
+    this.getTable()
   }
 
   renderJobTitle() {

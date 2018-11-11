@@ -44,6 +44,7 @@ public:
       job.title = title;
       job.desc = desc;
       job.maxpriceeos = maxpriceeos;
+      job.progress = 0;
     });
   }
 
@@ -88,13 +89,28 @@ public:
   {
   }
 
-  ACTION devsetjobdone(const uint64_t timestamp, const name caller,
-                       const uint64_t jobid, const uint64_t bidid)
+  ACTION devsetjobdone(const uint64_t timestamp,
+                       const uint64_t jobid, const uint64_t rating, const string &appraisal)
   {
+    auto job = _jobs.find(jobid);
+    eosio_assert(job != _jobs.end(), "Job could not be found");
+
+    _jobs.modify(job, _self, [&](auto &modified_job) {
+      // hardcoding job completion for the purpose of hackathon
+      // in reality, both the employer and developer would have to have signed the
+      // 'jobdone' button. These final steps bring the progress level to 100.
+      modified_job.progress = 100;
+    });
+
+    if (modified_job.progress == 100)
+    {
+      // issue COLLAB tokens to the developer and employer accounts
+    
+    }
   }
 
   ACTION empsetjobdone(const uint64_t timestamp, const name caller,
-                       const uint64_t jobid, const uint64_t bidid)
+                       const uint64_t jobid, const uint64_t rating, const string &appraisal)
   {
   }
 
@@ -128,6 +144,7 @@ private:
     string title;
     string desc;
     uint64_t maxpriceeos;
+    uint64_t progress;
 
     // primary key
     uint64_t primary_key() const { return jobid; }
