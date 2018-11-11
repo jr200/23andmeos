@@ -23,9 +23,11 @@ export default class BidsForJob extends Component {
     super(props)
     this.state = {
       noteTable: [], // to store the table rows from smart contract,
-      jobInfo: null
+      jobInfo: [],
+      jobId: props.match.params.jobid
     }
     this.handleFormEvent = this.handleFormEvent.bind(this)
+    console.log("CONSTRUCTOR: " + this.state.jobId)
   }
 
   // generic function to handle form events (e.g. "submit" / "reset")
@@ -100,7 +102,7 @@ export default class BidsForJob extends Component {
 
   // gets table data from the blockchain
   // and saves it into the component state: "noteTable"
-  getTable(jobid) {
+  getTable() {
     const rpc = new JsonRpc(endpoint)
     rpc
       .get_table_rows({
@@ -110,7 +112,11 @@ export default class BidsForJob extends Component {
         table: "bidstruct", // name of the table as specified by the contract abi
         limit: 100
       })
-      .then(result => this.setState({ noteTable: result.rows }))
+      .then(result =>
+        this.setState({
+          noteTable: result.rows.filter(res => res.jobid == this.state.jobId)
+        })
+      )
 
     rpc
       .get_table_rows({
@@ -120,7 +126,15 @@ export default class BidsForJob extends Component {
         table: "jobstruct", // name of the table as specified by the contract abi
         limit: 100
       })
-      .then(result => this.setState({ jobInfo: result.rows }))
+      .then(
+        result => {
+          // this.setState({
+          console.log(" Searching: " + this.state.jobId)
+          const jobInfo = result.rows.find(res => res.jobid == this.state.jobId)
+          this.setState({ jobInfo: jobInfo })
+        }
+        // })
+      )
   }
 
   componentDidMount() {
@@ -131,14 +145,19 @@ export default class BidsForJob extends Component {
   }
 
   renderJobTitle() {
+    console.log("jrenderjobobtitle:")
+    console.log(this.state.jobInfo)
     return (
       <div>
-        <h1>{this.props.jobtitle}</h1>
+        <h1>{this.state.jobInfo.title}</h1>
+        <p>{this.state.jobInfo.desc}</p>
         <p>{this.props.jobdesc}</p>
       </div>
     )
   }
   render() {
+    console.log("render")
+
     const { noteTable } = this.state
     // const { classes } = this.props
 
@@ -159,7 +178,7 @@ export default class BidsForJob extends Component {
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>{developer}</div>
                 <div>
-                  {bidpriceeos}/{bidtimehours}
+                  {bidpriceeos} EOS/{bidtimehours} hours
                 </div>
               </div>
             </CardHeader>
