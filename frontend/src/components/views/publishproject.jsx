@@ -9,13 +9,17 @@ import {
   CardHeader,
   CardFooter,
   Button,
+  FormGroup,
   CardSubtitle,
   Row,
   Col,
   InputGroup,
   InputGroupAddon,
+  InputGroupText,
+  Form,
+  Label,
   Input,
-  InputGroupText
+  FormText
 } from "reactstrap"
 
 const endpoint = "http://localhost:8888"
@@ -90,7 +94,9 @@ export default class PublishProject extends Component {
       )
 
       console.log(result)
-      this.getTable()
+
+      let path = "/jobmarket"
+      this.props.history.push(path)
     } catch (e) {
       console.log("Caught exception: " + e)
       if (e instanceof RpcError) {
@@ -99,77 +105,32 @@ export default class PublishProject extends Component {
     }
   }
 
-  // gets table data from the blockchain
-  // and saves it into the component state: "noteTable"
-  getTable() {
-    const rpc = new JsonRpc(endpoint)
-    rpc
-      .get_table_rows({
-        json: true,
-        code: "notechainacc", // contract who owns the table
-        scope: "notechainacc", // scope of the table
-        table: "jobstruct", // name of the table as specified by the contract abi
-        limit: 100
-      })
-      .then(result => this.setState({ noteTable: result.rows }))
-  }
-
-  componentDidMount() {
-    this.getTable()
-  }
-
-  routeChange = jobid => {
-    console.log("CLICKED: " + jobid)
-    let path = "/bidsforjob/" + jobid
-    this.props.history.push(path)
-  }
-
   render() {
     const { noteTable } = this.state
-    // const { classes } = this.props
-
-    // generate each note as a card
-    const generateCard = (key, timestamp, employer, title, desc) => (
-      <Col sm="6" key={key}>
-        <Card>
-          <CardBody>
-            <CardHeader>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>{title}</div>
-                <div>{new Date(timestamp * 1000).toString()}</div>
-              </div>
-            </CardHeader>
-            <CardText>{desc}</CardText>
-            <CardFooter>
-              <div>
-                <Button color="primary">Make Bid</Button>
-                <Button
-                  color="primary"
-                  value={key}
-                  onClick={() => this.routeChange(key)}
-                >
-                  View Bids
-                </Button>
-              </div>
-            </CardFooter>
-          </CardBody>
-        </Card>
-      </Col>
-    )
-    let noteCards = noteTable.map((row, i) =>
-      generateCard(row.jobid, row.timestamp, row.employer, row.title, row.desc)
-    )
+    const { classes } = this.props
 
     return (
       <div margin="50">
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>Search</InputGroupText>
-          </InputGroupAddon>
-          <Input />
-        </InputGroup>
-        <br />
-        <Row>{noteCards}</Row>
+        <Form>
+          <FormGroup>
+            <Label for="title">Project Title</Label>
+            <Input type="text" name="title" id="title" />
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="budget">Maximum Budget (EOS)</Label>
+            <Input type="text" name="budget" id="budget" />
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="deadline">Completion Date</Label>
+            <Input type="date" name="text" id="deadline" />
+          </FormGroup>
+
+          <Button type="button" onClick={this.handleFormEvent}>
+            Submit
+          </Button>
+        </Form>
       </div>
     )
 
