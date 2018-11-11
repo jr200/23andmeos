@@ -1,26 +1,8 @@
 import React, { Component } from "react"
 import { Api, JsonRpc, RpcError, JsSignatureProvider } from "eosjs" // https://github.com/EOSIO/eosjs
 import { TextDecoder, TextEncoder } from "text-encoding"
-import { withRouter } from "react-router-dom"
-import {
-  Card,
-  CardText,
-  CardBody,
-  CardHeader,
-  CardFooter,
-  Button,
-  FormGroup,
-  CardSubtitle,
-  Row,
-  Col,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Form,
-  Label,
-  Input,
-  FormText
-} from "reactstrap"
+
+import { Button, CustomInput, FormGroup, Form, Label, Input } from "reactstrap"
 
 const endpoint = "http://localhost:8888"
 
@@ -39,26 +21,19 @@ export default class PublishProject extends Component {
     // stop default behaviour
     event.preventDefault()
 
+    console.log()
     // collect form data
-    let account = event.target.account.value
-    let privateKey = event.target.privateKey.value
-    let note = event.target.note.value
+    let account = "janesmith"
+    let privateKey = "5KLqT1UFxVnKRWkjvhFur4sECrPhciuUqsYRihc1p9rxhXQMZBg"
 
     // prepare variables for the switch below to send transactions
-    let actionName = ""
-    let actionData = {}
-
-    // define actionName and action according to event type
-    switch (event.type) {
-      case "submit":
-        actionName = "update"
-        actionData = {
-          user: account,
-          note: note
-        }
-        break
-      default:
-        return
+    let actionName = "emppostjob"
+    let actionData = {
+      timestamp: (Date.now() / 1000) | 0,
+      employer: "XXX",
+      title: event.target.title.value,
+      desc: event.target.desc.value,
+      maxpriceeos: event.target.budget.value
     }
 
     // eosjs function call: connect to the blockchain
@@ -106,15 +81,21 @@ export default class PublishProject extends Component {
   }
 
   render() {
-    const { noteTable } = this.state
-    const { classes } = this.props
+    // const { noteTable } = this.state
+    // const { classes } = this.props
 
     return (
       <div margin="50">
-        <Form>
+        <h1>Project Proposal</h1>
+        <Form onSubmit={this.handleFormEvent}>
           <FormGroup>
-            <Label for="title">Project Title</Label>
+            <Label for="title">Title</Label>
             <Input type="text" name="title" id="title" />
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="desc">Description</Label>
+            <Input type="textarea" name="text" id="desc" />
           </FormGroup>
 
           <FormGroup>
@@ -123,11 +104,26 @@ export default class PublishProject extends Component {
           </FormGroup>
 
           <FormGroup>
+            <Label for="stakeaddr">EOS Stake Address</Label>
+            <Input type="text" name="stakeaddr" id="stakeaddr" />
+          </FormGroup>
+
+          <FormGroup>
             <Label for="deadline">Completion Date</Label>
             <Input type="date" name="text" id="deadline" />
           </FormGroup>
 
-          <Button type="button" onClick={this.handleFormEvent}>
+          <FormGroup>
+            <Label for="filebrowse">File Browser with Custom Label</Label>
+            <CustomInput
+              type="file"
+              id="filebrowse"
+              name="customFile"
+              label="Attach Documents"
+            />
+          </FormGroup>
+
+          <Button type="submit" color="primary">
             Submit
           </Button>
         </Form>

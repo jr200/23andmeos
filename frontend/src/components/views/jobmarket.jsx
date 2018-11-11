@@ -1,7 +1,6 @@
 import React, { Component } from "react"
-import { Api, JsonRpc, RpcError, JsSignatureProvider } from "eosjs" // https://github.com/EOSIO/eosjs
-import { TextDecoder, TextEncoder } from "text-encoding"
-import { withRouter } from "react-router-dom"
+import { JsonRpc } from "eosjs" // https://github.com/EOSIO/eosjs
+
 import {
   Card,
   CardText,
@@ -9,7 +8,6 @@ import {
   CardHeader,
   CardFooter,
   Button,
-  CardSubtitle,
   Row,
   Col,
   InputGroup,
@@ -65,7 +63,7 @@ export default class JobMarket extends Component {
             <CardHeader>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>{title}</div>
-                <div>{new Date(timestamp * 1000).toString()}</div>
+                <div>#{key}</div>
               </div>
             </CardHeader>
             <CardText>{desc}</CardText>
@@ -85,9 +83,17 @@ export default class JobMarket extends Component {
         </Card>
       </Col>
     )
-    let noteCards = noteTable.map((row, i) =>
-      generateCard(row.jobid, row.timestamp, row.employer, row.title, row.desc)
-    )
+    let noteCards = noteTable
+      .reverse()
+      .map((row, i) =>
+        generateCard(
+          row.jobid,
+          row.timestamp,
+          row.employer,
+          row.title,
+          row.desc
+        )
+      )
 
     return (
       <div margin="50">

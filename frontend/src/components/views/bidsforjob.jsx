@@ -1,6 +1,6 @@
 import React, { Component } from "react"
-import { Api, JsonRpc, RpcError, JsSignatureProvider } from "eosjs" // https://github.com/EOSIO/eosjs
-import { TextDecoder, TextEncoder } from "text-encoding"
+import { JsonRpc } from "eosjs" // https://github.com/EOSIO/eosjs
+
 import {
   Card,
   CardText,
@@ -8,13 +8,8 @@ import {
   CardHeader,
   CardFooter,
   Button,
-  CardSubtitle,
   Row,
-  Col,
-  InputGroup,
-  InputGroupAddon,
-  Input,
-  InputGroupText
+  Col
 } from "reactstrap"
 const endpoint = "http://localhost:8888"
 
