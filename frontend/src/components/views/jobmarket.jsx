@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { Api, JsonRpc, RpcError, JsSignatureProvider } from "eosjs" // https://github.com/EOSIO/eosjs
 import { TextDecoder, TextEncoder } from "text-encoding"
+import { withRouter } from "react-router-dom"
 import {
   Card,
   CardText,
@@ -117,6 +118,12 @@ export default class JobMarket extends Component {
     this.getTable()
   }
 
+  routeChange = jobid => {
+    console.log("CLICKED: " + jobid)
+    let path = "/bidsforjob/" + jobid
+    this.props.history.push(path)
+  }
+
   render() {
     const { noteTable } = this.state
     // const { classes } = this.props
@@ -136,7 +143,13 @@ export default class JobMarket extends Component {
             <CardFooter>
               <div>
                 <Button color="primary">Make Bid</Button>
-                <Button color="primary">View Bids</Button>
+                <Button
+                  color="primary"
+                  value={key}
+                  onClick={() => this.routeChange(key)}
+                >
+                  View Bids
+                </Button>
               </div>
             </CardFooter>
           </CardBody>
