@@ -113,9 +113,9 @@ public:
       // transer COLLAB tokens to the developer and employer accounts
       action{
           permission_level{_self, "active"_n},
-          "eosio.token"_n,
+          "notechainacc"_n,
           "transfer"_n,
-          std::make_tuple(_self, developer, RATING_REWARD, "test")}
+          std::make_tuple(_self, developer, RATING_REWARD, "test message")}
           .send();
     }
   }

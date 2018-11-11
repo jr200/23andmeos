@@ -61,8 +61,8 @@ export default class RateCollabParticipant extends Component {
 
     console.log()
     // collect form data
-    let account = "janesmith"
-    let privateKey = "5KLqT1UFxVnKRWkjvhFur4sECrPhciuUqsYRihc1p9rxhXQMZBg"
+    let account = "notechainacc"
+    let privateKey = "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"
 
     // prepare variables for the switch below to send transactions
     let actionName = "devsetjobdone"
@@ -70,6 +70,7 @@ export default class RateCollabParticipant extends Component {
       timestamp: (Date.now() / 1000) | 0,
       jobid: this.state.jobId,
       rating: event.target.score.value,
+      developer: "janesmith",
       appraisal: event.target.desc.value
     }
 
@@ -91,7 +92,7 @@ export default class RateCollabParticipant extends Component {
               name: actionName,
               authorization: [
                 {
-                  actor: account,
+                  actor: "notechainacc",
                   permission: "active"
                 }
               ],

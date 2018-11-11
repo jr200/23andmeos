@@ -19,6 +19,12 @@ do
   sleep 2s
 done
 
-#start frontend react app
-echo "[quick_start.sh] Starting frontend react app"
-./start_frontend.sh
+
+./scripts/create_accounts.sh
+./scripts/create_mock_data.sh
+
+./scripts/deploy_contract.sh eosio.token eosio.token notechainwal $(cat eosiomain_wallet_password.txt)
+
+echo docker exec -it eosio_notechain_container bash
+echo cleos push action eosio.token create '[ "eosio", "1000000000.0000 COLLAB"]' -p eosio.token@active
+

@@ -14,7 +14,7 @@ echo "=== create mock posts ==="
 # $(cat notechain_wallet_password.txt)
 
 # import bobross account private key and create mock posts under bobross
-cleos wallet import -n notechainwal --private-key 5K7mtrinTFrVTduSxizUc5hjXJEtTjVTsqSHeBHes1Viep86FP5
+cleos wallet import -n notechainwal --private-key 5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3
 
 # download jq for json reader, we use jq here for reading the json file ( accounts.json )
 mkdir -p ~/bin && curl -sSL -o ~/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 && chmod +x ~/bin/jq && export PATH=$PATH:~/bin
