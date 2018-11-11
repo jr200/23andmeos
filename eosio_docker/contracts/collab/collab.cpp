@@ -12,27 +12,45 @@ CONTRACT collab : public contract
 public:
   // constructor
   collab(name receiver, name code, datastream<const char *> ds) : contract(receiver, code, ds),
-                                                                  _posts(receiver, receiver.value) {}
+                                                                  _jobs(receiver, receiver.value), _bids(receiver, receiver.value), _emps(receiver, receiver.value), _devs(receiver, receiver.value)
+  {
+  }
+
+  ACTION registerdev(const uint64_t timestamp, const name caller,
+                     const name devname)
+  {
+    // add to developer_table
+  }
+
+  ACTION registeremp(const uint64_t timestamp, const name caller,
+                     const name empname)
+  {
+    // add to employer_table
+  }
 
   // use macro so that eosio-cpp will add this as an to the ABI
   ACTION emppostjob(const uint64_t timestamp, const name caller,
                     const string &title, const string &desc, uint64_t max_px_eos, const string &deadline)
   {
+    // add to job_table
   }
 
   ACTION devbidjob(const uint64_t timestamp, const name caller,
                    const uint64_t jobid, const string &bidder, uint64_t dev_cost_eos, uint64_t dev_hours)
   {
+    // add to bid_table
   }
 
   ACTION empgetbids(const uint64_t timestamp, const name caller,
                     const uint64_t jobid)
   {
+    // list all bids for jobid in the job_table
   }
 
   ACTION empacceptbid(const uint64_t timestamp, const name caller,
                       const uint64_t jobid, const uint64_t bidid, const uint64_t stake)
   {
+    //
   }
 
   ACTION empmsgdev(const uint64_t timestamp, const name caller,
@@ -78,20 +96,6 @@ public:
 
 private:
   // use TABLE macro so that eosio-cpp will add this as a multi_index to the ABI
-  TABLE poststruct
-  {
-    uint64_t pkey;
-    name author;
-    uint128_t skey;
-
-    // primary key
-    uint64_t primary_key() const { return pkey; }
-
-    // secondary key
-    // only supports uint64_t, uint128_t, uint256_t, double or long double
-    uint128_t get_by_skey() const { return skey; }
-  };
-
   TABLE jobstruct
   {
     uint64_t jobid;
@@ -179,13 +183,10 @@ private:
                                         const_mem_fun<employstruct, uint128_t, &employstruct::get_by_skey>>>
       employer_table;
 
-  // create a multi-index table and support a secondary key
-  // typedef multi_index<name(table_name), object_template_to_use, other_indices> multi_index_name;
-  typedef eosio::multi_index<name("poststruct"), poststruct,
-                             indexed_by<name("getbyskey"), const_mem_fun<poststruct, uint128_t, &poststruct::get_by_skey>>>
-      post_table;
-
-  post_table _posts;
+  job_table _jobs;
+  bid_table _bids;
+  developer_table _devs;
+  employer_table _emps;
 };
 
 EOSIO_DISPATCH(collab, (emppostjob)(devbidjob)(empgetbids)(empacceptbid)(empmsgdev)(devmsgemp)(devsetjobdone)(empsetjobdone)(empraisearb)(devraisearb)(assignarb)(arbsetresult))
