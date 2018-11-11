@@ -90,22 +90,33 @@ public:
   }
 
   ACTION devsetjobdone(const uint64_t timestamp,
+                       const name developer,
                        const uint64_t jobid, const uint64_t rating, const string &appraisal)
   {
     auto job = _jobs.find(jobid);
     eosio_assert(job != _jobs.end(), "Job could not be found");
 
+    const int updatedProgress = 100;
     _jobs.modify(job, _self, [&](auto &modified_job) {
       // hardcoding job completion for the purpose of hackathon
       // in reality, both the employer and developer would have to have signed the
       // 'jobdone' button. These final steps bring the progress level to 100.
-      modified_job.progress = 100;
+      modified_job.progress = updatedProgress;
     });
 
-    if (modified_job.progress == 100)
+    if (updatedProgress == 100)
     {
-      // issue COLLAB tokens to the developer and employer accounts
-    
+      // the rating reward is a function of time, but hardcoded here for the hackathon.
+      const int RATING_REWARD = 25;
+
+      // transer COLLAB tokens to the developer and employer accounts
+      // action{
+      //     permission_level{_self, "payout"_n},
+      //     "eosio.token"_n,
+      //     "transfer"_n,
+      //     transfer{
+      //         .from = _self, .to = owner, .quantity = RATING_REWARD, .memo = conditr->description}}
+      //     .send();
     }
   }
 
