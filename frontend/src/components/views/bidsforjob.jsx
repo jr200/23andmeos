@@ -108,7 +108,9 @@ export default class BidsForJob extends Component {
                   </div>
                 </div>
               </CardHeader>
-              <CardText>DETAILS about user</CardText>
+              <CardText style={{ margin: "10px" }}>
+                Incididunt nostrud sint dolor consequat sunt ex.
+              </CardText>
               <CardFooter>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                   <Button color="danger" style={{ marginRight: "10px" }}>

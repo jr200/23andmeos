@@ -9,6 +9,7 @@ import { Nav, NavItem, NavLink } from "reactstrap"
 
 import JobMarket from "./components/views/jobmarket"
 import BidsForJob from "./components/views/bidsforjob"
+import Balance from "./components/views/balance"
 import ProjectLog from "./components/views/projectlog"
 import Arbitration from "./components/views/arbitration"
 import RateCollabParticipant from "./components/views/ratecollabparticipant"
@@ -56,6 +57,7 @@ ReactDOM.render(
         <div>
           <Route path="/publishproject" component={PublishProject} />
           <Route path="/jobmarket" component={JobMarket} />
+          <Route path="/balance" component={Balance} />
           <Route exact path="/" component={JobMarket} />
           {/* <Route
             path="/ratecollabparticipant/:jobid/:participant"
