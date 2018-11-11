@@ -108,17 +108,17 @@ export default class JobMarket extends Component {
     const { classes } = this.props
 
     // generate each note as a card
-    const generateCard = (key, timestamp, user, note) => (
+    const generateCard = (key, timestamp, employer, title, desc) => (
       <Card key={key}>
         <CardBody>
-          <CardHeader>{user}</CardHeader>
+          <CardHeader>{title}</CardHeader>
           <CardSubtitle>{new Date(timestamp * 1000).toString()}</CardSubtitle>
-          <CardText>{note}</CardText>
+          <CardText>{desc}</CardText>
         </CardBody>
       </Card>
     )
     let noteCards = noteTable.map((row, i) =>
-      generateCard(i, row.timestamp, row.user, row.note)
+      generateCard(i, row.timestamp, row.employer, row.title, row.desc)
     )
 
     return <div>{noteCards}</div>

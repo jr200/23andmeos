@@ -47,11 +47,11 @@ public:
     });
   }
 
-  ACTION devbidjob(const uint64_t timestamp, const name dev,
-                   const uint64_t jobid, uint64_t bidpriceeos, uint64_t bidtimehours)
+  ACTION devbidjob(const uint64_t timestamp,
+                   const uint64_t jobid, const string &dev, uint64_t bidpriceeos, uint64_t bidtimehours)
   {
 
-    _bids.emplace(dev, [&](auto &bid) {
+    _bids.emplace(_self, [&](auto &bid) {
       bid.bidid = _bids.available_primary_key();
       bid.jobid = jobid;
       bid.developer = dev;
