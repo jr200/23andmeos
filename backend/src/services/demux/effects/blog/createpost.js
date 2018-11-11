@@ -1,15 +1,15 @@
-function createPost (state, payload, blockInfo, context) {
-  const post = {
+function createjob(state, payload, blockInfo, context) {
+  const job = {
     _id: {
       timestamp: payload.data.timestamp,
-      author: payload.data.author
+      employee: payload.data.author
     },
     author: payload.data.author,
     title: payload.data.title,
     content: payload.data.content,
     tag: payload.data.tag
   }
-  context.socket.emit('createpost', post)
+  context.socket.emit("createjob", post)
 }
 
-export default createPost
+export default createJob

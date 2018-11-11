@@ -19,22 +19,19 @@ public:
   ACTION registerdev(const uint64_t timestamp, const name caller,
                      const name devname)
   {
-    // add to developer_table
+    // add to developer_table, set rating 0
   }
 
   ACTION registeremp(const uint64_t timestamp, const name caller,
                      const name empname)
   {
-    // add to employer_table
+    // add to employer_table, set rating 0
   }
 
   // use macro so that eosio-cpp will add this as an to the ABI
   ACTION emppostjob(const uint64_t timestamp, const name employer,
                     const string &title, const string &desc, uint64_t maxpriceeos, const string &deadline)
   {
-    // add to job_table
-    uint128_t skey = static_cast<uint128_t>(employer.value) << 64 | timestamp;
-
     // _posts is our multi_index table
     // multi_index is how you store persistant data across actions in EOSIO
     // each action has a new action context which is a clean working memory with no prior working state from other action executions
@@ -42,7 +39,6 @@ public:
     // const_iterator emplace( unit64_t payer, Lambda&& constructor )
     _jobs.emplace(employer, [&](auto &job) {
       job.jobid = _jobs.available_primary_key();
-      job.skey = skey;
       job.employer = employer;
       job.title = title;
       job.maxpriceeos = maxpriceeos;
@@ -53,28 +49,31 @@ public:
                    const uint64_t jobid, uint64_t bidpriceeos, uint64_t bidtimehours)
   {
 
-    uint128_t skey = static_cast<uint128_t>(dev.value) << 64 | timestamp;
-
     _bids.emplace(dev, [&](auto &bid) {
       bid.bidid = _bids.available_primary_key();
       bid.jobid = jobid;
       bid.developer = dev;
-      bid.skey = skey;
       bid.bidpriceeos = bidpriceeos;
       bid.bidtimehours = bidtimehours;
+      bid.bidaccepted = 0;
     });
   }
 
-  ACTION empgetbids(const uint64_t timestamp, const name caller,
-                    const uint64_t jobid)
-  {
-    // list all bids for jobid in the job_table
-  }
+  // ACTION empgetbids(const uint64_t timestamp, const name caller,
+  //                   const uint64_t jobid)
+  // {
+  //   // list all bids for jobid in the job_table
+  // }
 
   ACTION empacceptbid(const uint64_t timestamp, const name caller,
                       const uint64_t jobid, const uint64_t bidid, const uint64_t stake)
   {
-    //
+    // auto post_index = _posts.get_index<name("getbyskey")>();
+    // auto post = post_index.find(skey);
+    // eosio_assert(post != post_index.end(), "Post could not be found");
+
+    // // check if authorized to update post
+    // require_auth(post->author);
   }
 
   ACTION empmsgdev(const uint64_t timestamp, const name caller,
@@ -124,23 +123,15 @@ private:
   {
     uint64_t jobid;
     name employer;
-    uint128_t skey;
     string title;
     string description;
     uint64_t maxpriceeos;
 
     // primary key
     uint64_t primary_key() const { return jobid; }
-
-    // secondary key
-    // only supports uint64_t, uint128_t, uint256_t, double or long double
-    uint128_t get_by_skey() const { return skey; }
   };
 
-  typedef eosio::multi_index<name("jobstruct"),
-                             jobstruct,
-                             indexed_by<name("getbyskey"),
-                                        const_mem_fun<jobstruct, uint128_t, &jobstruct::get_by_skey>>>
+  typedef eosio::multi_index<name("jobstruct"), jobstruct>
       job_table;
 
   TABLE bidstruct
@@ -148,65 +139,39 @@ private:
     uint64_t bidid;
     uint64_t jobid;
     name developer;
-    uint128_t skey;
     uint64_t bidpriceeos;
     uint64_t bidtimehours;
+    uint64_t bidaccepted;
 
     // primary key
     uint64_t primary_key() const { return bidid; }
-
-    // secondary key
-    // only supports uint64_t, uint128_t, uint256_t, double or long double
-    uint128_t get_by_skey() const { return skey; }
   };
 
-  typedef eosio::multi_index<name("bidstruct"),
-                             bidstruct,
-                             indexed_by<name("getbyskey"),
-                                        const_mem_fun<bidstruct, uint128_t, &bidstruct::get_by_skey>>>
-      bid_table;
+  typedef eosio::multi_index<name("bidstruct"), bidstruct> bid_table;
 
   TABLE devstruct
   {
     uint64_t devid;
     name devname;
-    uint128_t skey;
     uint64_t rating;
 
     // primary key
     uint64_t primary_key() const { return devid; }
-
-    // secondary key
-    // only supports uint64_t, uint128_t, uint256_t, double or long double
-    uint128_t get_by_skey() const { return skey; }
   };
 
-  typedef eosio::multi_index<name("devstruct"),
-                             devstruct,
-                             indexed_by<name("getbyskey"),
-                                        const_mem_fun<devstruct, uint128_t, &devstruct::get_by_skey>>>
-      developer_table;
+  typedef eosio::multi_index<name("devstruct"), devstruct> developer_table;
 
   TABLE employstruct
   {
     uint64_t empid;
     name empname;
-    uint128_t skey;
     uint64_t rating;
 
     // primary key
     uint64_t primary_key() const { return empid; }
-
-    // secondary key
-    // only supports uint64_t, uint128_t, uint256_t, double or long double
-    uint128_t get_by_skey() const { return skey; }
   };
 
-  typedef eosio::multi_index<name("employstruct"),
-                             employstruct,
-                             indexed_by<name("getbyskey"),
-                                        const_mem_fun<employstruct, uint128_t, &employstruct::get_by_skey>>>
-      employer_table;
+  typedef eosio::multi_index<name("employstruct"), employstruct> employer_table;
 
   job_table _jobs;
   bid_table _bids;
@@ -214,4 +179,5 @@ private:
   employer_table _emps;
 };
 
-EOSIO_DISPATCH(collab, (emppostjob)(devbidjob)(empgetbids)(empacceptbid)(empmsgdev)(devmsgemp)(devsetjobdone)(empsetjobdone)(empraisearb)(devraisearb)(assignarb)(arbsetresult))
+EOSIO_DISPATCH(collab, (emppostjob)(devbidjob)(empacceptbid)(empmsgdev)(devmsgemp)(devsetjobdone)(empsetjobdone)(empraisearb)(devraisearb)(assignarb)(arbsetresult))
+// (empgetbids)
