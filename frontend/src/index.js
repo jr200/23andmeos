@@ -16,12 +16,12 @@ ReactDOM.render(
     <div>
       <Nav pills>
         <NavItem>
-          <NavLink href="/" active>
-            NoteChain
-          </NavLink>
+          <NavLink href="/">NoteChain</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="/jobmarket">Market Place</NavLink>
+          <NavLink href="/jobmarket" active>
+            Market Place
+          </NavLink>
         </NavItem>
         <NavItem>
           <NavLink href="/bidsforjob">xxBidsForJob</NavLink>
@@ -37,7 +37,7 @@ ReactDOM.render(
       <div>
         <Route exact path="/" component={Index} />
         <Route path="/jobmarket" component={JobMarket} />
-        <Route path="/bidsforjob" component={BidsForJob} />
+        <Route path={`/bidsforjob/:jobid`} component={BidsForJob} />
         <Route path="/projectlog" component={ProjectLog} />
         <Route path="/arbitration" component={Arbitration} />
       </div>

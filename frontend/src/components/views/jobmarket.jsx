@@ -1,7 +1,21 @@
 import React, { Component } from "react"
 import { Api, JsonRpc, RpcError, JsSignatureProvider } from "eosjs" // https://github.com/EOSIO/eosjs
 import { TextDecoder, TextEncoder } from "text-encoding"
-import { Card, CardText, CardBody, CardHeader, CardSubtitle } from "reactstrap"
+import {
+  Card,
+  CardText,
+  CardBody,
+  CardHeader,
+  CardFooter,
+  Button,
+  CardSubtitle,
+  Row,
+  Col,
+  InputGroup,
+  InputGroupAddon,
+  Input,
+  InputGroupText
+} from "reactstrap"
 
 const endpoint = "http://localhost:8888"
 
@@ -105,22 +119,47 @@ export default class JobMarket extends Component {
 
   render() {
     const { noteTable } = this.state
-    const { classes } = this.props
+    // const { classes } = this.props
 
     // generate each note as a card
     const generateCard = (key, timestamp, employer, title, desc) => (
-      <Card key={key}>
-        <CardBody>
-          <CardHeader>{title}</CardHeader>
-          <CardSubtitle>{new Date(timestamp * 1000).toString()}</CardSubtitle>
-          <CardText>{desc}</CardText>
-        </CardBody>
-      </Card>
+      <Col sm="6" key={key}>
+        <Card>
+          <CardBody>
+            <CardHeader>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div>{title}</div>
+                <div>{new Date(timestamp * 1000).toString()}</div>
+              </div>
+            </CardHeader>
+            <CardText>{desc}</CardText>
+            <CardFooter>
+              <div>
+                <Button color="primary">Make Bid</Button>
+                <Button color="primary">View Bids</Button>
+              </div>
+            </CardFooter>
+          </CardBody>
+        </Card>
+      </Col>
     )
     let noteCards = noteTable.map((row, i) =>
-      generateCard(i, row.timestamp, row.employer, row.title, row.desc)
+      generateCard(row.jobid, row.timestamp, row.employer, row.title, row.desc)
     )
 
-    return <div>{noteCards}</div>
+    return (
+      <div margin="50">
+        <InputGroup>
+          <InputGroupAddon addonType="prepend">
+            <InputGroupText>Search</InputGroupText>
+          </InputGroupAddon>
+          <Input />
+        </InputGroup>
+        <br />
+        <Row>{noteCards}</Row>
+      </div>
+    )
+
+    // ;<div>{noteCards}</div>
   }
 }

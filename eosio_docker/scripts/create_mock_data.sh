@@ -4,7 +4,7 @@
 # set PATH
 PATH="$PATH:/opt/eosio/bin"
 
-cleos wallet list unlock -n notechainwal --password $(cat eosiomain_wallet_password.txt)
+cleos wallet list unlock -n notechainwal --password $(cat notechain_wallet_password.txt)
 
 # cd into script's folder
 cd "$(dirname "$0")"
@@ -31,4 +31,17 @@ jq -c '.[]' mock_jobs.json | while read i; do
 
   # push the createpost action to the smart contract
   cleos push action notechainacc emppostjob "[ $timestamp, "\""$employer"\"", "\""$title"\"", "\""$description"\"", $maxeosprice ]" -p bobross@active
+done
+
+
+
+jq -c '.[]' mock_bids.json | while read i; do
+  timestamp=$(jq -r '.timestamp' <<< "$i")
+  jobid=$(jq -r '.jobid' <<< "$i")
+  dev=$(jq -r '.developer' <<< "$i")
+  bidpriceeos=$(jq -r '.bidpriceeos' <<< "$i")
+  bidtimehours=$(jq -r '.bidtimehours' <<< "$i")
+
+  # push the createpost action to the smart contract
+  cleos push action notechainacc devbidjob "[ $timestamp, $jobid, "\""$dev"\"", $bidpriceeos, $bidtimehours ]" -p bobross@active
 done

@@ -140,7 +140,7 @@ private:
   {
     uint64_t bidid;
     uint64_t jobid;
-    name developer;
+    string developer;
     uint64_t bidpriceeos;
     uint64_t bidtimehours;
     uint64_t bidaccepted;

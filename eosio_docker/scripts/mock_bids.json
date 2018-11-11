@@ -1,0 +1,44 @@
+[
+  {
+    "timestamp": 1532704418,
+    "jobid": 1,
+    "developer": "Dan Larimer",
+    "bidpriceeos": 10,
+    "bidtimehours": 1
+  },
+  {
+    "timestamp": 1532704418,
+    "jobid": 1,
+    "developer": "Eric Smith",
+    "bidpriceeos": 10,
+    "bidtimehours": 160
+  },
+  {
+    "timestamp": 1532704418,
+    "jobid": 1,
+    "developer": "Gerome Hiller",
+    "bidpriceeos": 3,
+    "bidtimehours": 25
+  },
+  {
+    "timestamp": 1532704418,
+    "jobid": 1,
+    "developer": "Peter Venkmann",
+    "bidpriceeos": 17,
+    "bidtimehours": 10
+  },
+  {
+    "timestamp": 1532704418,
+    "jobid": 1,
+    "developer": "Bobby G",
+    "bidpriceeos": 24,
+    "bidtimehours": 1
+  },
+  {
+    "timestamp": 1532204418,
+    "jobid": 2,
+    "developer": "Robert Giraffe",
+    "bidpriceeos": 14,
+    "bidtimehours": 12
+  }
+]
