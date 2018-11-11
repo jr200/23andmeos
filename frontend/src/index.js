@@ -2,16 +2,8 @@ import React from "react"
 import ReactDOM from "react-dom"
 
 import "bootstrap/dist/css/bootstrap.min.css"
-import { BrowserRouter as Router, Route, Link } from "react-router-dom"
-import {
-  Nav,
-  NavItem,
-  Dropdown,
-  DropdownItem,
-  DropdownToggle,
-  DropdownMenu,
-  NavLink
-} from "reactstrap"
+import { BrowserRouter as Router, Route } from "react-router-dom"
+import { Nav, NavItem, NavLink } from "reactstrap"
 
 import JobMarket from "./components/views/jobmarket"
 import BidsForJob from "./components/views/bidsforjob"

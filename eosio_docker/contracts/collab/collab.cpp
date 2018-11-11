@@ -29,18 +29,20 @@ public:
   }
 
   // use macro so that eosio-cpp will add this as an to the ABI
-  ACTION emppostjob(const uint64_t timestamp, const name employer,
-                    const string &title, const string &desc, uint64_t maxpriceeos, const string &deadline)
+  ACTION emppostjob(const uint64_t timestamp,
+                    const string &employer,
+                    const string &title, const string &desc, uint64_t maxpriceeos)
   {
     // _posts is our multi_index table
     // multi_index is how you store persistant data across actions in EOSIO
     // each action has a new action context which is a clean working memory with no prior working state from other action executions
     // we are adding a record to our table
     // const_iterator emplace( unit64_t payer, Lambda&& constructor )
-    _jobs.emplace(employer, [&](auto &job) {
+    _jobs.emplace(_self, [&](auto &job) {
       job.jobid = _jobs.available_primary_key();
       job.employer = employer;
       job.title = title;
+      job.desc = desc;
       job.maxpriceeos = maxpriceeos;
     });
   }
@@ -122,9 +124,9 @@ private:
   TABLE jobstruct
   {
     uint64_t jobid;
-    name employer;
+    string employer;
     string title;
-    string description;
+    string desc;
     uint64_t maxpriceeos;
 
     // primary key

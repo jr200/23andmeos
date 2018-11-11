@@ -1,16 +1,7 @@
 import React, { Component } from "react"
 import { Api, JsonRpc, RpcError, JsSignatureProvider } from "eosjs" // https://github.com/EOSIO/eosjs
 import { TextDecoder, TextEncoder } from "text-encoding"
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardHeader,
-  CardSubtitle,
-  Button
-} from "reactstrap"
+import { Card, CardText, CardBody, CardHeader, CardSubtitle } from "reactstrap"
 
 const endpoint = "http://localhost:8888"
 
@@ -102,7 +93,7 @@ export default class JobMarket extends Component {
         json: true,
         code: "notechainacc", // contract who owns the table
         scope: "notechainacc", // scope of the table
-        table: "notestruct", // name of the table as specified by the contract abi
+        table: "jobstruct", // name of the table as specified by the contract abi
         limit: 100
       })
       .then(result => this.setState({ noteTable: result.rows }))
