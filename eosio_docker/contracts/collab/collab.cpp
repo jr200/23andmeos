@@ -15,51 +15,63 @@ public:
                                                                   _posts(receiver, receiver.value) {}
 
   // use macro so that eosio-cpp will add this as an to the ABI
-  ACTION emppostjob(const uint64_t timestamp, const name caller, const string &x)
+  ACTION emppostjob(const uint64_t timestamp, const name caller,
+                    const string &title, const string &desc, uint64_t max_px_eos, const string &deadline)
   {
   }
 
-  ACTION devbidjob(const uint64_t timestamp, const name caller)
+  ACTION devbidjob(const uint64_t timestamp, const name caller,
+                   const uint64_t jobid, const string &bidder, uint64_t dev_cost_eos, uint64_t dev_hours)
   {
   }
 
-  ACTION empgetbids(const uint64_t timestamp, const name caller)
+  ACTION empgetbids(const uint64_t timestamp, const name caller,
+                    const uint64_t jobid)
   {
   }
 
-  ACTION empacceptbid(const uint64_t timestamp, const name caller)
+  ACTION empacceptbid(const uint64_t timestamp, const name caller,
+                      const uint64_t jobid, const uint64_t bidid, const uint64_t stake)
   {
   }
 
-  ACTION empmsgdev(const uint64_t timestamp, const name caller)
+  ACTION empmsgdev(const uint64_t timestamp, const name caller,
+                   const name emp, const uint64_t jobid, const string &msg)
   {
   }
 
-  ACTION devmsgemp(const uint64_t timestamp, const name caller)
+  ACTION devmsgemp(const uint64_t timestamp, const name caller,
+                   const name dev, const uint64_t jobid, const string &msg)
   {
   }
 
-  ACTION devsetjobdone(const uint64_t timestamp, const name caller)
+  ACTION devsetjobdone(const uint64_t timestamp, const name caller,
+                       const uint64_t jobid, const uint64_t bidid)
   {
   }
 
-  ACTION empsetjobdone(const uint64_t timestamp, const name caller)
+  ACTION empsetjobdone(const uint64_t timestamp, const name caller,
+                       const uint64_t jobid, const uint64_t bidid)
   {
   }
 
-  ACTION empraisearb(const uint64_t timestamp, const name caller)
+  ACTION empraisearb(const uint64_t timestamp, const name caller,
+                     const uint64_t jobid, const uint64_t bidid, const string &reason)
   {
   }
 
-  ACTION devraisearb(const uint64_t timestamp, const name caller)
+  ACTION devraisearb(const uint64_t timestamp, const name caller,
+                     const uint64_t jobid, const uint64_t bidid, const string &reason)
   {
   }
 
-  ACTION assignarb(const uint64_t timestamp, const name caller)
+  ACTION assignarb(const uint64_t timestamp, const name caller,
+                   const uint64_t jobid, const name dev)
   {
   }
 
-  ACTION arbsetresult(const uint64_t timestamp, const name caller)
+  ACTION arbsetresult(const uint64_t timestamp, const name caller,
+                      const uint64_t jobid, const uint64_t bidid, const uint64_t goodorbad, const string &reason)
   {
     // set job done or job not done
   }
@@ -85,6 +97,7 @@ private:
     uint64_t jobid;
     name employer;
     uint128_t skey;
+    string title;
     string description;
     uint64_t maxpriceeos;
 
