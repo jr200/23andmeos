@@ -25,7 +25,8 @@ ReactDOM.render(
           marginRight: "auto",
           marginTop: "150px",
           marginBottom: "0px",
-          border: "1px blue solid"
+          border: "1px blue solid",
+          borderRadius: "8px"
         }}
       >
         <Nav
@@ -43,7 +44,9 @@ ReactDOM.render(
           </NavItem>
 
           <NavItem>
-            <NavLink href="/ratecollabparticipant">RateCollabJob</NavLink>
+            <NavLink href="/ratecollabparticipant/1/janesmith">
+              RateCollabJob
+            </NavLink>
           </NavItem>
           <NavItem>
             <NavLink href="/arbitration">Arbitration</NavLink>
@@ -54,10 +57,15 @@ ReactDOM.render(
           <Route path="/publishproject" component={PublishProject} />
           <Route path="/jobmarket" component={JobMarket} />
           <Route exact path="/" component={JobMarket} />
+          {/* <Route
+            path="/ratecollabparticipant/:jobid/:participant"
+            component={RateCollabParticipant}
+          /> */}
           <Route
             path="/ratecollabparticipant/:jobid/:participant"
             component={RateCollabParticipant}
           />
+
           <Route path={`/bidsforjob/:jobid`} component={BidsForJob} />
           {/* <Route path="/arbitration" component={Arbitration} /> */}
         </div>

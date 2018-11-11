@@ -57,7 +57,7 @@ export default class JobMarket extends Component {
 
     // generate each note as a card
     const generateCard = (key, timestamp, employer, title, desc) => (
-      <Col sm="6" key={key}>
+      <Col sm="6" key={key} style={{ marginTop: "20px" }}>
         <Card>
           <CardBody>
             <CardHeader>
@@ -99,7 +99,7 @@ export default class JobMarket extends Component {
       )
 
     return (
-      <div margin="50">
+      <div style={{ display: "flex", flexDirection: "column", margin: "20px" }}>
         <InputGroup>
           <InputGroupAddon addonType="prepend">
             <InputGroupText>Search</InputGroupText>

@@ -30,7 +30,7 @@ export default class PublishProject extends Component {
     let actionName = "emppostjob"
     let actionData = {
       timestamp: (Date.now() / 1000) | 0,
-      employer: "XXX",
+      employer: "block.one",
       title: event.target.title.value,
       desc: event.target.desc.value,
       maxpriceeos: event.target.budget.value
@@ -85,7 +85,7 @@ export default class PublishProject extends Component {
     // const { classes } = this.props
 
     return (
-      <div margin="50">
+      <div style={{ margin: "20px" }}>
         <h1>Project Proposal</h1>
         <Form onSubmit={this.handleFormEvent}>
           <FormGroup>

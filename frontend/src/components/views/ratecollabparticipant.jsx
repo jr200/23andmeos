@@ -123,7 +123,7 @@ export default class RateCollabParticipant extends Component {
     // const { classes } = this.props
 
     return (
-      <div margin="50">
+      <div style={{ margin: "25px" }}>
         <h1>
           Rate {this.state.participant}'s work on Task #{this.state.jobId}
         </h1>
@@ -153,7 +153,9 @@ export default class RateCollabParticipant extends Component {
             <Input type="textarea" name="text" id="desc" />
           </FormGroup>
 
-          <div>Rating Reward is 25 COLLAB.</div>
+          <div>
+            <b>Rating Reward is 25 COLLAB.</b>
+          </div>
           <Button type="submit" color="primary">
             Submit
           </Button>

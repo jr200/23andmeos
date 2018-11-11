@@ -98,12 +98,10 @@ export default class BidsForJob extends Component {
         bidaccepted
       ) => (
         <Col sm="6" key={key}>
-          <Card>
+          <Card style={{ marginTop: "20px" }}>
             <CardBody>
               <CardHeader>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
+                <div>
                   <div>{developer}</div>
                   <div>
                     {bidpriceeos} EOS/{bidtimehours} hours
@@ -112,9 +110,11 @@ export default class BidsForJob extends Component {
               </CardHeader>
               <CardText>DETAILS about user</CardText>
               <CardFooter>
-                <div>
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <Button color="danger" style={{ marginRight: "10px" }}>
+                    Decline
+                  </Button>
                   <Button color="success">Accept</Button>
-                  <Button color="danger">Decline</Button>
                 </div>
               </CardFooter>
             </CardBody>
@@ -134,17 +134,12 @@ export default class BidsForJob extends Component {
       )
     }
 
-    // uint64_t bidid;
-    // uint64_t jobid;
-    // string developer;
-    // uint64_t bidpriceeos;
-    // uint64_t bidtimehours;
-    // uint64_t bidaccepted;
-
     return (
-      <div>
-        <Row>{this.renderJobTitle()}</Row>
-        <Row>{noteCards}</Row>
+      <div style={{ margin: "20px" }}>
+        <Col>
+          <Row>{this.renderJobTitle()}</Row>
+          <Row>{noteCards}</Row>
+        </Col>
       </div>
     )
 
