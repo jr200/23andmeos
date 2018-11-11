@@ -108,7 +108,7 @@ export default class RateCollabParticipant extends Component {
 
       console.log(result)
 
-      let path = "/jobmarket"
+      let path = "/balance/janesmith"
       this.props.history.push(path)
     } catch (e) {
       console.log("Caught exception: " + e)

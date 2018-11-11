@@ -57,7 +57,7 @@ ReactDOM.render(
         <div>
           <Route path="/publishproject" component={PublishProject} />
           <Route path="/jobmarket" component={JobMarket} />
-          <Route path="/balance" component={Balance} />
+          <Route path="/balance/:user" component={Balance} />
           <Route exact path="/" component={JobMarket} />
           {/* <Route
             path="/ratecollabparticipant/:jobid/:participant"

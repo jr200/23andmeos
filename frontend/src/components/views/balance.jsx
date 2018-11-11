@@ -22,8 +22,12 @@ export default class Balance extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      collabTokens: 0
+      collabTokens: 0,
+      user: props.match.params.user
     }
+
+    console.log("BALANCE")
+    console.log(this.state.user)
   }
 
   // gets table data from the blockchain
@@ -31,7 +35,7 @@ export default class Balance extends Component {
   getTable() {
     const rpc = new JsonRpc(endpoint)
     rpc
-      .get_currency_balance("eosio.token", "janesmith", "COLLAB")
+      .get_currency_balance("eosio.token", this.state.user, "COLLAB")
       .then(result => this.setState({ collabTokens: result.rows }))
   }
 
@@ -43,6 +47,13 @@ export default class Balance extends Component {
     const { collabTokens } = this.state
     console.log(collabTokens)
 
-    return <div />
+    return (
+      <div style={{ margin: "20px" }}>
+        <h3>Balance for {this.state.user}</h3>
+        <br />
+        <h4>EOS: 1,211</h4>
+        <h4>COLLAB: {this.state.collabToken || 25}</h4>
+      </div>
+    )
   }
 }
