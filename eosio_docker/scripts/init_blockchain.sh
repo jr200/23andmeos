@@ -44,6 +44,9 @@ cleos wallet import -n notechainwal --private-key 5JpWT4ehouB2FF9aCfdfnZ5AwbQbTt
 # Active key for notechainwal wallet
 cleos wallet import -n notechainwal --private-key 5JD9AGTuTeD5BXZwGQ5AtwBqHK21aHmYnTetHgk1B3pjj7krT8N
 
+cleos wallet import -n notechainwal --private-key 5KaqYiQzKsXXXxVvrG8Q3ECZdQAj2hNcvCgGEubRvvq7CU3LySK
+
+
 # * Replace "notechainwal" by your own wallet name when you start your own project
 
 # create account for notechainacc with above wallet's public keys

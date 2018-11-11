@@ -107,16 +107,16 @@ public:
     if (updatedProgress == 100)
     {
       // the rating reward is a function of time, but hardcoded here for the hackathon.
-      const int RATING_REWARD = 25;
+      const string RATING_REWARD = "25.0000 COLLAB";
+      string memo = "memo";
 
       // transer COLLAB tokens to the developer and employer accounts
-      // action{
-      //     permission_level{_self, "payout"_n},
-      //     "eosio.token"_n,
-      //     "transfer"_n,
-      //     transfer{
-      //         .from = _self, .to = owner, .quantity = RATING_REWARD, .memo = conditr->description}}
-      //     .send();
+      action{
+          permission_level{_self, "active"_n},
+          "eosio.token"_n,
+          "transfer"_n,
+          std::make_tuple(_self, developer, RATING_REWARD, "test")}
+          .send();
     }
   }
 

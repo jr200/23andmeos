@@ -37,7 +37,7 @@ void token::issue(name to, asset quantity, string memo)
 
     stats statstable(_self, sym.code().raw());
     auto existing = statstable.find(sym.code().raw());
-    eosio_assert(existing != statstable.end(), "token with symbol does not exist, create token before issue");
+    eosio_assert(existing != statstable.end(), "token with the symbol does not exist, create token before issue");
     const auto &st = *existing;
 
     require_auth(st.issuer);
