@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 
 import "bootstrap/dist/css/bootstrap.min.css"
-import "./index.css"
+// import "./index.css"
 
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import { Nav, NavItem, NavLink } from "reactstrap"
@@ -25,24 +25,23 @@ ReactDOM.render(
           marginRight: "auto",
           marginTop: "150px",
           marginBottom: "0px",
-          border: "5px red solid"
+          border: "1px blue solid"
         }}
       >
-        <Nav pills style={{ marginBottom: "25px" }}>
+        <Nav
+          pills
+          style={{
+            marginBottom: "25px",
+            textColor: "white"
+          }}
+        >
           <NavItem>
-            <NavLink href="/jobmarket" active>
-              Market Place
-            </NavLink>
+            <NavLink href="/jobmarket">Market Place</NavLink>
           </NavItem>
           <NavItem>
             <NavLink href="/publishproject">Publish Project</NavLink>
           </NavItem>
-          <NavItem>
-            <NavLink href="/bidsforjob">xxBidsForJob</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="/projectlog">xxProjectLog</NavLink>
-          </NavItem>
+
           <NavItem>
             <NavLink href="/ratecollabparticipant">RateCollabJob</NavLink>
           </NavItem>
@@ -60,8 +59,7 @@ ReactDOM.render(
             component={RateCollabParticipant}
           />
           <Route path={`/bidsforjob/:jobid`} component={BidsForJob} />
-          <Route path="/projectlog" component={ProjectLog} />
-          <Route path="/arbitration" component={Arbitration} />
+          {/* <Route path="/arbitration" component={Arbitration} /> */}
         </div>
       </div>
     </Router>

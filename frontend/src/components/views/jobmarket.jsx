@@ -68,8 +68,11 @@ export default class JobMarket extends Component {
             </CardHeader>
             <CardText>{desc}</CardText>
             <CardFooter>
-              <div>
-                <Button color="primary">Make Bid</Button>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button style={{ color: "primary", marginRight: "10px" }}>
+                  Make Bid
+                </Button>
+
                 <Button
                   color="primary"
                   value={key}
