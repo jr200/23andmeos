@@ -159,51 +159,59 @@ export default class BidsForJob extends Component {
     console.log("render")
 
     const { noteTable } = this.state
-    // const { classes } = this.props
 
-    // generate each note as a card
-    const generateCard = (
-      key,
-      jobid,
-      timestamp,
-      developer,
-      bidpriceeos,
-      bidtimehours,
-      bidaccepted
-    ) => (
-      <Col sm="6" key={key}>
-        <Card>
-          <CardBody>
-            <CardHeader>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>{developer}</div>
-                <div>
-                  {bidpriceeos} EOS/{bidtimehours} hours
+    let noteCards = []
+    if (noteTable.length == 0) {
+      noteCards = <h1>No bids Have been received.</h1>
+    } else {
+      // const { classes } = this.props
+
+      // generate each note as a card
+      const generateCard = (
+        key,
+        jobid,
+        timestamp,
+        developer,
+        bidpriceeos,
+        bidtimehours,
+        bidaccepted
+      ) => (
+        <Col sm="6" key={key}>
+          <Card>
+            <CardBody>
+              <CardHeader>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <div>{developer}</div>
+                  <div>
+                    {bidpriceeos} EOS/{bidtimehours} hours
+                  </div>
                 </div>
-              </div>
-            </CardHeader>
-            <CardText>DETAILS about user</CardText>
-            <CardFooter>
-              <div>
-                <Button color="success">Accept</Button>
-                <Button color="danger">Decline</Button>
-              </div>
-            </CardFooter>
-          </CardBody>
-        </Card>
-      </Col>
-    )
-    let noteCards = noteTable.map((row, i) =>
-      generateCard(
-        row.bidid,
-        row.jobid,
-        row.timestamp,
-        row.developer,
-        row.bidpriceeos,
-        row.bidtimehours,
-        row.bidaccepted
+              </CardHeader>
+              <CardText>DETAILS about user</CardText>
+              <CardFooter>
+                <div>
+                  <Button color="success">Accept</Button>
+                  <Button color="danger">Decline</Button>
+                </div>
+              </CardFooter>
+            </CardBody>
+          </Card>
+        </Col>
       )
-    )
+      noteCards = noteTable.map((row, i) =>
+        generateCard(
+          row.bidid,
+          row.jobid,
+          row.timestamp,
+          row.developer,
+          row.bidpriceeos,
+          row.bidtimehours,
+          row.bidaccepted
+        )
+      )
+    }
 
     // uint64_t bidid;
     // uint64_t jobid;
