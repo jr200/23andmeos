@@ -9,6 +9,7 @@ import JobMarket from "./components/views/jobmarket"
 import BidsForJob from "./components/views/bidsforjob"
 import ProjectLog from "./components/views/projectlog"
 import Arbitration from "./components/views/arbitration"
+import PublishProject from "./components/views/publishproject"
 import Index from "./components/landing"
 
 ReactDOM.render(
@@ -24,6 +25,9 @@ ReactDOM.render(
           </NavLink>
         </NavItem>
         <NavItem>
+          <NavLink href="/publishproject">Publish Project</NavLink>
+        </NavItem>
+        <NavItem>
           <NavLink href="/bidsforjob">xxBidsForJob</NavLink>
         </NavItem>
         <NavItem>
@@ -36,6 +40,7 @@ ReactDOM.render(
 
       <div>
         <Route exact path="/" component={Index} />
+        <Route path="/publishproject" component={PublishProject} />
         <Route path="/jobmarket" component={JobMarket} />
         <Route path={`/bidsforjob/:jobid`} component={BidsForJob} />
         <Route path="/projectlog" component={ProjectLog} />
