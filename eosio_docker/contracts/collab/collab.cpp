@@ -29,16 +29,40 @@ public:
   }
 
   // use macro so that eosio-cpp will add this as an to the ABI
-  ACTION emppostjob(const uint64_t timestamp, const name caller,
-                    const string &title, const string &desc, uint64_t max_px_eos, const string &deadline)
+  ACTION emppostjob(const uint64_t timestamp, const name employer,
+                    const string &title, const string &desc, uint64_t maxpriceeos, const string &deadline)
   {
     // add to job_table
+    uint128_t skey = static_cast<uint128_t>(employer.value) << 64 | timestamp;
+
+    // _posts is our multi_index table
+    // multi_index is how you store persistant data across actions in EOSIO
+    // each action has a new action context which is a clean working memory with no prior working state from other action executions
+    // we are adding a record to our table
+    // const_iterator emplace( unit64_t payer, Lambda&& constructor )
+    _jobs.emplace(employer, [&](auto &job) {
+      job.jobid = _jobs.available_primary_key();
+      job.skey = skey;
+      job.employer = employer;
+      job.title = title;
+      job.maxpriceeos = maxpriceeos;
+    });
   }
 
-  ACTION devbidjob(const uint64_t timestamp, const name caller,
-                   const uint64_t jobid, const string &bidder, uint64_t dev_cost_eos, uint64_t dev_hours)
+  ACTION devbidjob(const uint64_t timestamp, const name dev,
+                   const uint64_t jobid, uint64_t bidpriceeos, uint64_t bidtimehours)
   {
-    // add to bid_table
+
+    uint128_t skey = static_cast<uint128_t>(dev.value) << 64 | timestamp;
+
+    _bids.emplace(dev, [&](auto &bid) {
+      bid.bidid = _bids.available_primary_key();
+      bid.jobid = jobid;
+      bid.developer = dev;
+      bid.skey = skey;
+      bid.bidpriceeos = bidpriceeos;
+      bid.bidtimehours = bidtimehours;
+    });
   }
 
   ACTION empgetbids(const uint64_t timestamp, const name caller,
@@ -122,6 +146,7 @@ private:
   TABLE bidstruct
   {
     uint64_t bidid;
+    uint64_t jobid;
     name developer;
     uint128_t skey;
     uint64_t bidpriceeos;
